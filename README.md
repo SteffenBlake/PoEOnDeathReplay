@@ -12,6 +12,12 @@ It is compiled to run in standalone mode for Windows only. Since this software d
 
 Simply run `OnDeathReplay.WPF.exe` and it will start monitoring for character death. An icon will appear on your task tray for windows, simply right click on it and hit "Exit" to stop the program at any time.
 
+You will need to setup whatever your choice of Automatic Replay program seperately.
+
+AMD Users with AMD Adrenaline: https://www.amd.com/en/support/kb/faq/dh-023#:~:text=To%20enable%2C%20click%20Instant%20Replay,the%20Recording%20Profile%20being%20used.
+
+Nvidia Users with GeForce Experience: https://beebom.com/how-setup-instant-replay-geforce-experience/ 
+
 # How to configure
 
 Simply modify the included `AppSettings.json` file to change what hotkey is triggered automatically on character death. **Note if you modify this file you will need to close and re-open the program to load the new settings!**
