@@ -14,7 +14,9 @@ Simply run `OnDeathReplay.WPF.exe` and it will start monitoring for character de
 
 # How to configure
 
-Simply modify the included `AppSettings.json` file to change what hotkey is triggered automatically on character death. See below for what needs to be set for various config values:
+Simply modify the included `AppSettings.json` file to change what hotkey is triggered automatically on character death. **Note if you modify this file you will need to close and re-open the program to load the new settings!**
+
+See below for what needs to be set for various config values:
 
 `LogFilePath` - This is the path to your relevant Client.txt file which holds all live Path of Exile logs. Keep in mind backslashes need to be escaped.
 
