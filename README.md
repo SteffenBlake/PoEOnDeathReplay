@@ -30,6 +30,8 @@ See below for what needs to be set for various config values:
 
 * Steam Default: `C:\Program Files (x86)\\Steam\\steamapps\\common\\Path of Exile\\logs\\Client.txt`
 
+`Delay_ms` - How many milliseconds after the character dies to send the keystroke trigger. You usually want a couple seconds here as many instant recap programs have a smidge of lag to them, so if this is set to zero it might trim off the death itself occasionally!
+
 `KeyModifiers` - List of Modifiers to apply to the keystoke, namely Ctrl, Shift, and Alt. These have to be an exact match to the Virtual Key Codes from Microsoft, which you can find here: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 
 `Keys` - List of keys to press, these are the actual keys that will be pressed, and will be pressed in the order specified in the list.
@@ -38,10 +40,13 @@ See this example config here:
 
 ```
 {
+  // Path to the PoE Client.txt log file, requires escaping
   "LogFilePath": "C:\\Program Files (x86)\\Grinding Gear Games\\Path of Exile\\logs\\Client.txt",
 
-  // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+  // Delay after death before triggering hotkey in milliseconds
+  "Delay_ms": 3000,
 
+  // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
   // Key Modifiers like Shift, Control, Alt
   "KeyModifiers": [ "LCONTROL", "LSHIFT" ],
 
@@ -50,7 +55,7 @@ See this example config here:
 }
 ```
 
-This config is setup to monitor the Standalone Client log file, and it will send Ctrl+Shift+S when the character dies.
+This config is setup to monitor the Standalone Client log file, and it will send Ctrl+Shift+S 3 seconds after the character dies.
 
 # Does this program violate the Path of Exile Terms of Services?
 
