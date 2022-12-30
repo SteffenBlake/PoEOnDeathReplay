@@ -11,7 +11,9 @@
         Height="1" 
         Width="1" 
         ShowInTaskbar="False" 
-        Visibility="Hidden">
+        Visibility="Hidden"
+        Closing="Window_Closing"
+        >
     <tb:TaskbarIcon
             IconSource="/Application.ico"
             ToolTipText="OnDeathReplay">

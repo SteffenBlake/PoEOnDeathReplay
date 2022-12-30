@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,13 +24,15 @@ namespace OnDeathReplay.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CancellationTokenSource CTS { get; }
         public MainWindow()
         {
             InitializeComponent();
-            ListenLogs();
+            CTS = new CancellationTokenSource();
+            new Thread(() => ListenLogs(CTS.Token)).Start();
         }
 
-        private async void ListenLogs()
+        private void ListenLogs(CancellationToken token)
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("AppSettings.json", false)
@@ -39,14 +42,14 @@ namespace OnDeathReplay.WPF
             var simulator = new InputSimulator();
             using var fs = new FileStream(config.LogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
             using var reader = new StreamReader(fs);
-            _ = await reader.ReadToEndAsync();
+            _ = reader.ReadToEnd();
 
-            while (true)
+            while (!token.IsCancellationRequested)
             {
-                var line = await reader.ReadLineAsync();
+                var line = reader.ReadLine();
                 if (string.IsNullOrEmpty(line))
                 {
-                    await Task.Delay(100);
+                    Thread.Sleep(100);
                     continue;
                 }
                 if (!line.Contains("] :"))
@@ -59,13 +62,20 @@ namespace OnDeathReplay.WPF
                     continue;
                 }
 
+                Thread.Sleep(config.Delay_ms);
+
                 _ = simulator.Keyboard.ModifiedKeyStroke(config.KeyModifiers, config.Keys);
             }
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CTS.Cancel();
+        }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            Close();
         }
     }
 }
